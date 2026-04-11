@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="5; index.html">
+    <title>Payment Failed - ATW Travels</title>
+    <link rel='stylesheet' id='bootstrap-css-css'
+        href='wp-content/themes/traveler/v2/css/bootstrap.minaec2.css?ver=6.4.1' type='text/css' media='all' />
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .error-details {
+            background: #fff5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #dc3545;
+        }
+        .error-details h4 {
+            color: #dc3545;
+            margin-bottom: 15px;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 5px 0;
+            border-bottom: 1px solid #f8d7da;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #495057;
+        }
+        .detail-value {
+            color: #6c757d;
+        }
+        .retry-section {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .retry-btn {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .retry-btn:hover {
+            background: #0056b3;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 p-5">
+                <!-- Failure Modal -->
+                <div class="modal-overlay" id="failureModal">
+                    <div class="modal-container">
+                        <div class="error-icon">&#10006;</div>
+                        <h3>Payment Failed!</h3>
+                        <p>There was an issue processing your payment. Please try again.</p>
+                        
+                        <!-- Error Details -->
+                        <div class="error-details" id="errorDetails" style="display: none;">
+                            <h4>Error Details</h4>
+                            <div class="detail-row">
+                                <span class="detail-label">Transaction ID:</span>
+                                <span class="detail-value" id="txnid">-</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Amount:</span>
+                                <span class="detail-value" id="amount">-</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Error Code:</span>
+                                <span class="detail-value" id="errorCode">-</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Status:</span>
+                                <span class="detail-value" id="status">-</span>
+                            </div>
+                        </div>
+                        
+                        <div class="retry-section">
+                            <p>Don't worry! You can try again or contact our support team.</p>
+                            <a href="payment.html" class="retry-btn">Try Again</a>
+                        </div>
+                        
+                        <a href="/">Go to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="wp-content/themes/traveler/v2/js/bootstrap.min.js"
+        id="bootstrap-js-js"></script>
+    
+    <script>
+        // Parse URL parameters for PayU callback
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Display error details if available
+        document.addEventListener('DOMContentLoaded', function() {
+            const txnid = getUrlParameter('txnid');
+            const amount = getUrlParameter('amount');
+            const errorCode = getUrlParameter('error_code') || getUrlParameter('error');
+            const status = getUrlParameter('status');
+            
+            if (txnid || errorCode) {
+                document.getElementById('errorDetails').style.display = 'block';
+                document.getElementById('txnid').textContent = txnid || 'N/A';
+                document.getElementById('amount').textContent = amount ? '₹' + amount : 'N/A';
+                document.getElementById('errorCode').textContent = errorCode || 'Unknown Error';
+                document.getElementById('status').textContent = status || 'Failed';
+            }
+        });
+    </script>
+</body>
+</html>
