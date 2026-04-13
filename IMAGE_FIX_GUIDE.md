@@ -70,6 +70,8 @@ src="../../../../wp-content/uploads/2019/11/croatia-holiday-package-680x500.jpg"
 - Belgium
 - Bulgaria
 - Croatia
+- Romania
+- Slovakia
 
 ## Pattern for Future Fixes
 Replace:
